@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class AuthService {
     
@@ -46,16 +47,12 @@ class AuthService {
         
         let lowerCaseEmail = email.lowercased()
         
-        let header = [
-            "Content-Type": "application/json; charset=utf-8"
-        ]
-        
         let body: [String: Any] = [
             "email": lowerCaseEmail,
             "password": password
         ]
         
-        Alamofire.request(REGISTER_URL, method: .post, parameters: body, encoding: JSONEncoding.default, headers: header).response { (response) in
+        Alamofire.request(REGISTER_URL, method: .post, parameters: body, encoding: JSONEncoding.default, headers: HEADER).response { (response) in
             
             if response.error == nil {
                 completion(true)
@@ -63,10 +60,50 @@ class AuthService {
                 completion(false)
                 debugPrint(response.error as Any)
             }
-            
+        }
+    }
+    
+    func loginUser(email: String, password: String, completion: @escaping ComplitionHandler) {
+        
+        let lowerCaseEmail = email.lowercased()
+        
+        
+        let body: [String: Any] = [
+            "email": lowerCaseEmail,
+            "password": password
+        ]
+        
+        Alamofire.request(LOGIN_URL, method: .post, parameters: body, encoding: JSONEncoding.default, headers: HEADER).responseJSON { (response) in
+            if response.error == nil {
+                guard let data = response.data else {return}
+                do {
+                    let json = try JSON(data: data)
+                    self.userEmail = json["user"].stringValue
+                    self.authToken = json["token"].stringValue
+                } catch {
+                    debugPrint("SMTH wrong with the JSON")
+                }
+                
+                self.isLoggedIn = true
+                completion(true)
+            } else {
+                completion(false)
+                debugPrint(response.result as Any)
+            }
         }
         
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 
