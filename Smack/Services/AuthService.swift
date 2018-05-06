@@ -67,7 +67,6 @@ class AuthService {
         
         let lowerCaseEmail = email.lowercased()
         
-        
         let body: [String: Any] = [
             "email": lowerCaseEmail,
             "password": password
@@ -91,11 +90,48 @@ class AuthService {
                 debugPrint(response.result as Any)
             }
         }
-        
-        
     }
     
-    
+    func createUser(name: String, email: String, avatarName: String, avatarColor: String, completion: @escaping ComplitionHandler) {
+        
+        let lowerCaseEmail = email.lowercased()
+        
+        let body: [String: Any] = [
+            "name": name,
+            "email": lowerCaseEmail,
+            "avatarName": avatarName,
+            "avatarColor": avatarColor
+        ]
+        
+        let header = [
+            "Authorization": "Bearer \(AuthService.instance.authToken)",
+            "Content-Type": "application/json; charset=utf-8"
+        ]
+        
+        print(header)
+        
+        Alamofire.request(ADD_USER_URL, method: .post, parameters: body, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            if response.error == nil {
+                guard let data = response.data else {return}
+                do {
+                    let json = try JSON(data: data)
+                    let id = json["_id"].stringValue
+                    let color = json["avatarColor"].stringValue
+                    let avatarName = json["avatarName"].stringValue
+                    let email = json["email"].stringValue
+                    let name = json["name"].stringValue
+                    
+                    UserDataService.instance.setUserData(id: id, color: color, avatarName: avatarName, email: email, name: name)
+                    completion(true)
+                    
+                } catch {
+                    debugPrint("SMTH wrong with JSON")
+                }
+            } else {
+                debugPrint(response.error as Any)
+            }
+        }
+    }
     
     
     
