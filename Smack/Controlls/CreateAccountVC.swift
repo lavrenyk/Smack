@@ -27,7 +27,13 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         self.emailTxt.delegate = self
         self.passTxt.delegate = self
         self.usernameTxt.delegate = self
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDataService.instance.avatarName != "" {
+            avatarName = UserDataService.instance.avatarName
+            userImg.image = UIImage(named: avatarName)
+        }
     }
 
     
