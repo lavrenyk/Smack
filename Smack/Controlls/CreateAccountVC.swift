@@ -65,7 +65,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
                                 self.spinner.isHidden = true
                                 self.spinner.stopAnimating()
                                 self.performSegue(withIdentifier: UNWIND, sender: nil)
-                                NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+                                NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil) 
                             }
                         })
                     }
@@ -84,6 +84,7 @@ class CreateAccountVC: UIViewController, UITextFieldDelegate {
         let b = CGFloat(arc4random_uniform(255)) / 255
         
         bgColor = UIColor(red: r, green: g, blue: b, alpha: 1)
+        avatarColor = "[\(r), \(g), \(b), 1]"
         UIView.animate(withDuration: 0.3) {
             self.userImg.backgroundColor = self.bgColor
         }
