@@ -15,6 +15,9 @@ class ChannelVC: UIViewController {
     @IBOutlet weak var userImg: CircleImage!
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {}
     
+    override func viewDidAppear(_ animated: Bool) {
+        setupUserInfo()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +40,10 @@ class ChannelVC: UIViewController {
     }
     
     @objc func userDataDidChange(_ notif: Notification) {
+        setupUserInfo()
+    }
+    
+    func setupUserInfo() {
         if AuthService.instance.isLoggedIn {
             loginBtn.setTitle(UserDataService.instance.name, for: .normal)
             userImg.image = UIImage(named: UserDataService.instance.avatarName)
