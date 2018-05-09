@@ -39,7 +39,6 @@ class MessageService {
                         self.channels.append(channel)
                     }
                     completion(true)
-                    print(self.channels[0].channelTitle)
                 }
                 
                 
