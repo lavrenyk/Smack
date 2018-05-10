@@ -15,6 +15,7 @@ class MessageService {
     static let instance = MessageService()
     
     var channels = [Channel]()
+    var messages = [Message]()
     var selectedChannel : Channel?
     
     func findAllChannel(completion: @escaping ComplitionHandler) {
@@ -47,6 +48,48 @@ class MessageService {
                 debugPrint(response.error as Any)
             }
         }
+    }
+    
+    func findAllMessagesForChannel(channelId: String, completion: @escaping ComplitionHandler) {
+        Alamofire.request("\(GET_MESSAGES_URL)\(channelId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: BEARER_HEADER).responseJSON { (response) in
+            
+            if response.error == nil {
+                self.clearMessages()
+                guard let data = response.data else { return }
+                do {
+                    if let json = try JSON(data: data).array {
+                        print(json)
+                        for item in json {
+                            let messageBody = item["messageBody"].stringValue
+                            let channelId = item["channelId"].stringValue
+                            let id = item["_id"].stringValue
+                            let userName = item["userName"].stringValue
+                            let userAvata = item["userAvatar"].stringValue
+                            let userAvatarColor = item["userAvatarColor"].stringValue
+                            let timeStamp = item["timeStamp"].stringValue
+                            
+                            let message = Message(message: messageBody, userName: userName, channelId: channelId, userAvatar: userAvata, userAvatarColor: userAvatarColor, id: id, timeStamp: timeStamp)
+                            self.messages.append(message)
+                        }
+                    }
+                    print(self.messages)
+                    completion(true)
+                } catch {
+                    debugPrint("SMTH wrong with JSON")
+                }
+                
+            } else {
+                print("Error to get all messages!")
+                print("\(GET_MESSAGES_URL)\(channelId)")
+                print(BEARER_HEADER)
+                debugPrint(response.error as Any)
+                completion(false)
+            }
+        }
+    }
+    
+    func clearMessages() {
+        messages.removeAll()
     }
     
     func clearChannels() {
