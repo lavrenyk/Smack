@@ -76,14 +76,18 @@ class AuthService {
             if response.error == nil {
                 guard let data = response.data else {return}
                 do {
+                    print(data)
                     let json = try JSON(data: data)
+                    print(json)
                     self.userEmail = json["user"].stringValue
                     self.authToken = json["token"].stringValue
+                    print("Login event:", json["token"].stringValue)
                 } catch {
                     debugPrint("SMTH wrong with the JSON")
                 }
                 
                 self.isLoggedIn = true
+                
                 completion(true)
             } else {
                 completion(false)
