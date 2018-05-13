@@ -73,6 +73,9 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="messageBoxEditing:" destination="fCQ-gb-HPQ" eventType="editingChanged" id="Bjf-Vu-YOf"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUv-bo-xlE">
                                 <rect key="frame" x="337" y="632" width="30" height="30"/>
@@ -140,6 +143,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMK-Uc-UdK">
+                                <rect key="frame" x="8" y="602" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -153,7 +162,9 @@
                             <constraint firstItem="hy0-iA-ccx" firstAttribute="leading" secondItem="bqM-rS-ZBd" secondAttribute="leading" id="Knu-iG-1KP"/>
                             <constraint firstItem="hy0-iA-ccx" firstAttribute="top" secondItem="4oG-xA-Zr3" secondAttribute="bottom" id="VEQ-gG-sQ1"/>
                             <constraint firstItem="bqM-rS-ZBd" firstAttribute="trailing" secondItem="PUv-bo-xlE" secondAttribute="trailing" constant="10" id="fzn-I1-gW5"/>
+                            <constraint firstItem="aMK-Uc-UdK" firstAttribute="top" secondItem="hy0-iA-ccx" secondAttribute="bottom" constant="5" id="hl5-xF-tAN"/>
                             <constraint firstItem="pn9-Rh-TEf" firstAttribute="top" secondItem="hy0-iA-ccx" secondAttribute="bottom" constant="30" id="jGD-Vb-TYw"/>
+                            <constraint firstItem="aMK-Uc-UdK" firstAttribute="leading" secondItem="bqM-rS-ZBd" secondAttribute="leading" constant="8" id="l1X-22-y9g"/>
                             <constraint firstItem="4oG-xA-Zr3" firstAttribute="leading" secondItem="bqM-rS-ZBd" secondAttribute="leading" id="rRG-j6-gei"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bqM-rS-ZBd"/>
@@ -162,7 +173,9 @@
                         <outlet property="channelNameLbl" destination="wFV-63-FcE" id="Y0i-BK-PZy"/>
                         <outlet property="menuBtn" destination="NJr-bg-ZSd" id="ERG-YB-AE0"/>
                         <outlet property="messageTextBox" destination="pn9-Rh-TEf" id="i3s-pW-yIc"/>
+                        <outlet property="sendBtn" destination="PUv-bo-xlE" id="cpR-o5-Iel"/>
                         <outlet property="tableView" destination="hy0-iA-ccx" id="1tr-QI-vS4"/>
+                        <outlet property="typingLbl" destination="aMK-Uc-UdK" id="tB4-bT-9oN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WfQ-iV-DfL" userLabel="First Responder" sceneMemberID="firstResponder"/>
